@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: black;
+      margin: 0;
+      padding: 0;
+    }
+    .container1{
+    background-image: url('background.png'); 
+    background-size: cover; 
+    background-position: center; 
+    height: 100vh;
+    }
+    .container {
+      width: 400px;
+      margin: 0 auto;
+      margin-top: 50px;
+      background-color:#ded9ee;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="name"],
+    .form-group input[type="gmail"]  {
+      width: 100%;
+      padding: 8px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 8px;
+      background-color: #af4c57;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .form-group button:hover {
+      background-color: #45a049;
+    }
+    .form-group .forgot-password {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .form-group .oauth-buttons {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .form-group oauth-buttons-button1 {
+      margin: 5px;
+      padding: 8px 20px;
+      background-color: #af4c57;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+.form-group oauth-buttons-button1 {
+      margin: 5px;
+      padding: 8px 20px;
+      background-color: #3b5998;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .form-group .oauth-buttons button:hover {
+      background-color: #2d4373;
+    }
+    .oauth-buttons button span {
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container1">
+  <div class="container"  data-bs-target="#staticBackdrop">
+    <h2>Sign up</h2>
+    <form>
+          <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+      </div>
+      <div class="form-group">
+        <label for="number">Number</label>
+        <input type="name" id="password" name="password" placeholder="Enter your phone number" required>
+      </div>
+      <div class="form-group">
+        <label for="gmail">Gmail</label>
+        <input type="gmail" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+      <div class="form-group">
+        <button type="button" onclick="saveLoginDetails()">Login</button>
+      </div>
+      <div class="form-group forgot-password">
+        <a href="#">Need Help</a>
+      </div>
+      <div class="form-group oauth-buttons">
+        <button class="form-group oauth-buttons-button1" type="button" onclick="openGoogleLoginPage()">
+          <img src="google.png" alt="Google Icon" width="20" height="20">
+          <span>Login with Google</span>
+        </button>
+        <button class="form-group oauth-buttons-button2" type="button" onclick="openFacebookLoginPage()">
+          <img src="facebook.png" alt="Facebook Icon" width="20" height="20">
+          <span>Login with Facebook</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+  <script>
+    function openGoogleLoginPage() {
+      window.location.href = "https://accounts.google.com";
+    }
+
+    function openFacebookLoginPage() {
+      window.location.href = "https://www.facebook.com";
+    }
+
+    function saveLoginDetails() {
+    console.log("here")
+    // Get input values from the form
+    const name = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const phoneNumber = document.getElementById('password').value;
+
+    // Create a JavaScript object with the data to be sent
+    const formData = {
+        name: name,
+        email: email,
+        phone_number: phoneNumber
+    };
+
+    // Make an HTTP POST request to the Flask endpoint
+    fetch('http://localhost:5000/save-login-details', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error('Failed to save login details');
+    })
+    .then(data => {
+        console.log(data.message);
+        window.location.href = './index.html';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+  </script>
+</body>
+</html>

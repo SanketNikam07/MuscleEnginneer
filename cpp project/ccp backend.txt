@@ -1,0 +1,13 @@
+ python .\main.py - terminal
+
+
+mysql = root 3007 and password - admin123
+
+
+
+USE fitness;
+SELECT * FROM order_tables; // for cusstomer details 
+
+
+USE fitness;
+SELECT * FROM login_details;// for user login details
